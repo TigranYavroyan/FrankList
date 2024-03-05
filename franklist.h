@@ -424,8 +424,9 @@ namespace vhuk {
         Node* atail;
     };
 
+#include "franklist.hpp"
+
 }
 
-#include "franklist.hpp"
 
 #endif // FRANKLIST_H

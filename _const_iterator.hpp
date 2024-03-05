@@ -1,10 +1,6 @@
 #ifndef _CONST_ITERATOR_HPP
 #define _CONST_ITERATOR_HPP
 
-#include "franklist.h"
-
-using namespace vhuk;
-
 template <typename T>
 FrankList<T>::const_iterator::const_iterator (Node* ptr) : base_iterator(ptr) {}
 

@@ -1,8 +1,6 @@
 #ifndef _CONST_REVERSE_ITERATOR_HPP
 #define _CONST_REVERSE_ITERATOR_HPP
 
-#include "franklist.h"
-
 template <typename T>
 FrankList<T>::const_reverse_iterator::const_reverse_iterator (Node* tmp) :
     base_iterator(tmp) {}

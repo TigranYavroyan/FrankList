@@ -1,10 +1,6 @@
 #ifndef _ITERATOR_HPP
 #define _ITERATOR_HPP
 
-#include "franklist.h"
-
-using namespace vhuk;
-
 template <typename T>
 FrankList<T>::iterator::iterator (Node* ptr) : const_iterator(ptr) {}
 

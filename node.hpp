@@ -1,10 +1,6 @@
 #ifndef NODE_HPP
 #define NODE_HPP
 
-#include "franklist.h"
-
-using namespace vhuk;
-
 template <typename T>
 FrankList<T>::Node::Node () :
     val{},

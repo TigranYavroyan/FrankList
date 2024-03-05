@@ -1,6 +1,7 @@
 #ifndef FRANKLIST_HPP
 #define FRANKLIST_HPP
 
+#include "franklist.h"
 #include "node.hpp"
 #include "_flist_iterators.hpp"
 #include "_base_iterator.hpp"
@@ -17,8 +18,6 @@
 #include "_const_multi_reverse_iterator.hpp"
 #include "_multi_reverse_iterator.hpp"
 
-
-using namespace vhuk;
 //-----------------------------------------ctors and dtor-----------------------------------
 template <typename T>
 FrankList<T>::FrankList () :
@@ -43,19 +42,20 @@ FrankList<T>::FrankList (FrankList<T>::size_type size) :
 }
 
 template <typename T>
-FrankList<T>::FrankList (FrankList<T>::size_type size, FrankList<T>::const_reference init) {
+FrankList<T>::FrankList (FrankList<T>::size_type size, FrankList<T>::const_reference init) :
+    head{nullptr},
+    tail{nullptr},
+    ahead{nullptr},
+    atail{nullptr}
+{
     if (size == 0)
         throw std::invalid_argument("The size can't be 0");
-    head = new Node(init);
-    Node* tmp = head;
-    for (; size > 1; --size, tmp = tmp->next) {
-        tmp->next = new Node(init);
-        tmp->next->prev = tmp;
+
+    for (int i = 0; i < size; ++i) {
+        push_back(init);
     }
-    tail = tmp;
 }
 
-// do it with iterators later
 template <typename T>
 FrankList<T>::FrankList (const FrankList<FrankList<T>::value_type>& rhv) :
     head{nullptr},
@@ -93,6 +93,12 @@ FrankList<T>::FrankList (std::initializer_list<FrankList<T>::value_type> init) :
     for (auto i : init) {
         push_back(i);
     }
+}
+
+template <typename T>
+template <typename input_iterator>
+FrankList<T>::FrankList(input_iterator f, input_iterator l) {
+    
 }
 
 template <typename T>
@@ -148,16 +154,19 @@ void FrankList<T>::resize (FrankList<T>::size_type c, FrankList<T>::const_refere
 
 template <typename T>
 void FrankList<T>::push_back (FrankList<T>::const_reference elem) {
+    Node* tmp = nullptr;
     if (empty()) {
-        head = new Node(elem);
+        tmp = new Node(elem);
+        head = tmp;
         tail = head;
     }
     else {
-        Node* tmp = new Node(elem);
+        tmp = new Node(elem);
         tail->next = tmp;
         tmp->prev = tail;
         tail = tmp;
     }
+    put_in_sorted_order(tmp);
 }
 
 template <typename T>
@@ -211,7 +220,9 @@ void FrankList<T>::print (bool sorted, bool reversed) {
     if (empty())
         std::cout << "The list is empty" << std::endl;
     else if (sorted) {
-
+        for (const_asc_iterator i = this->cabegin(); i != this->caend(); ++i) {
+            std::cout << *i << ' ';
+        }
     }
     else if (reversed) {
         for (const_reverse_iterator i = this->crbegin(); i != this->crend(); ++i) {
@@ -260,4 +271,44 @@ const FrankList<T>& FrankList<T>::operator= (std::initializer_list<T> init) {
     return (*this);
 }
 
+template <typename T>
+void FrankList<T>::organize_left(Node* ptr)
+{
+	
+}
+
+template <typename T>
+void FrankList<T>::organize_right(Node* ptr)
+{
+	
+}
+
+template <typename T>
+void FrankList<T>::put_in_sorted_order (Node* ptr) {
+    if (ahead == nullptr && atail == nullptr) {
+        ahead = ptr;
+        atail = ptr;
+    }
+    else if (ptr->val < ahead->val) {
+        ptr->asc = ahead;
+        ahead->desc = ptr;
+        ahead = ptr;
+    }
+    else if (ptr->val > atail->val) {
+        ptr->desc = atail;
+        atail->asc = ptr;
+        atail = ptr;
+    }
+    else {
+        for (asc_iterator i = abegin(); i != aend() && i.ptr->asc != nullptr; ++i) {
+            if (ptr->val > *i && i.ptr->asc->val >= ptr->val) {
+                ptr->asc = i.ptr->asc;
+                ptr->desc = i.ptr;
+                i.ptr->asc->desc = ptr;
+                i.ptr->asc = ptr;
+                break;
+            }
+        }
+    }
+}
 #endif // FRANKLIST_HPP
