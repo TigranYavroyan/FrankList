@@ -35,7 +35,7 @@ bool FrankList<T>::operator== (const FrankList<T>& rhv) const {
         return false;
     const_iterator i_this = cbegin();
     const_iterator i = rhv.cbegin();
-    for (; i_this != this->cend() && i != rhv.cend()) {
+    for (; i_this != this->cend() && i != rhv.cend(); ++i_this, ++i) {
         if (*i != *i_this)
             return false;
     }
@@ -51,7 +51,7 @@ template <typename T>
 bool FrankList<T>::operator< (const FrankList<T>& rhv) const {
     const_iterator i_this = cbegin();
     const_iterator i = rhv.cbegin();
-    for (; i_this != this->cend() && i != rhv.cend()) {
+    for (; i_this != this->cend() && i != rhv.cend(); ++i_this, ++i) {
         if (*i_this < *i)
             return true;
         else if (*i_this > *i)
@@ -64,7 +64,7 @@ template <typename T>
 bool FrankList<T>::operator<= (const FrankList<T>& rhv) const {
     const_iterator i_this = cbegin();
     const_iterator i = rhv.cbegin();
-    for (; i_this != this->cend() && i != rhv.cend()) {
+    for (; i_this != this->cend() && i != rhv.cend(); ++i_this, ++i) {
         if (*i_this < *i)
             return true;
         else if (*i_this > *i)
@@ -77,7 +77,7 @@ template <typename T>
 bool FrankList<T>::operator> (const FrankList<T>& rhv) const {
     const_iterator i_this = cbegin();
     const_iterator i = rhv.cbegin();
-    for (; i_this != this->cend() && i != rhv.cend()) {
+    for (; i_this != this->cend() && i != rhv.cend(); ++i_this, ++i) {
         if (*i_this > *i)
             return true;
         else if (*i_this < *i)
@@ -90,7 +90,7 @@ template <typename T>
 bool FrankList<T>::operator>= (const FrankList<T>& rhv) const {
     const_iterator i_this = cbegin();
     const_iterator i = rhv.cbegin();
-    for (; i_this != this->cend() && i != rhv.cend()) {
+    for (; i_this != this->cend() && i != rhv.cend(); ++i_this, ++i) {
         if (*i_this > *i)
             return true;
         else if (*i_this < *i)
