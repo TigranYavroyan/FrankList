@@ -417,6 +417,9 @@ namespace vhuk {
         template <typename iter>
         iter insert_rev(iter pos, const_reference val); //O(1)
 
+    private: // my added functions for more readability
+        void _poping_asc_desc (Node* edge);
+
     private:
         Node* head;
         Node* tail;

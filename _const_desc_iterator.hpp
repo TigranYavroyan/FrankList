@@ -48,7 +48,7 @@ const typename FrankList<T>::const_desc_iterator& FrankList<T>::const_desc_itera
 
 template <typename T>
 const typename FrankList<T>::const_desc_iterator FrankList<T>::const_desc_iterator::operator++ (FrankList<T>::value_type) {
-    Node* tmp = this->ptr->desc;
+    Node* tmp = this->ptr;
     ++(*this);
     return (base_iterator(tmp));
 }
@@ -61,7 +61,7 @@ const typename FrankList<T>::const_desc_iterator& FrankList<T>::const_desc_itera
 
 template <typename T>
 const typename FrankList<T>::const_desc_iterator FrankList<T>::const_desc_iterator::operator-- (FrankList<T>::value_type) {
-    Node* tmp = this->ptr->asc;
+    Node* tmp = this->ptr;
     --(*this);
     return (base_iterator(tmp));
 }

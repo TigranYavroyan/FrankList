@@ -2,15 +2,45 @@
 #define _FLIST_SELF_ORGANIZATION_HPP
 
 template <typename T>
-void FrankList<T>::organize_left(Node* ptr)
-{
-	
+void FrankList<T>::organize_left(Node* ptr) {
+    Node* _prev = ptr->prev;
+
+	if (_prev == head)
+		head = ptr;
+	else
+		_prev->prev->next = ptr;
+
+	_prev->next = ptr->next;
+	ptr->next = _prev;
+	ptr->prev = _prev->prev;
+	_prev->prev = ptr;
+
+	if (ptr == tail)
+		tail = _prev;
+	else
+		_prev->next->prev = _prev;
+    
 }
 
 template <typename T>
-void FrankList<T>::organize_right(Node* ptr)
-{
-	
+void FrankList<T>::organize_right(Node* ptr) {
+	Node* _next = ptr->next;
+
+	if (_next == tail)
+		tail = ptr;
+	else
+		_next->next->prev = ptr;
+
+	_next->prev = ptr->prev;
+	ptr->prev = _next;
+	ptr->next = _next->next;
+	_next->next = ptr;
+
+	if (ptr == head)
+		head = _next;
+	else
+		_next->prev->next = _next;
+    
 }
 
 template <typename T>

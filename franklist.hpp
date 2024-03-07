@@ -1,7 +1,6 @@
 #ifndef FRANKLIST_HPP
 #define FRANKLIST_HPP
 
-#include "franklist.h"
 #include "node.hpp"
 #include "_flist_iterators.hpp"
 #include "_flist_operators.hpp"

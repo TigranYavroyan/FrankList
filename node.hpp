@@ -17,4 +17,5 @@ FrankList<T>::Node::Node (T _val) :
     asc{nullptr},
     desc{nullptr} {}
 
+
 #endif // NODE_HPP
