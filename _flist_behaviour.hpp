@@ -39,9 +39,8 @@ typename FrankList<T>::size_type FrankList<T>::size () const {
 
 template <typename T>
 void FrankList<T>::clear () noexcept {
-    if (empty()) {
+    if (empty())
         return;
-    }
     erase(begin(), end());
 }
 
@@ -49,14 +48,12 @@ template <typename T>
 void FrankList<T>::resize (FrankList<T>::size_type c, FrankList<T>::const_reference init) {
     if (c == 0)
         throw std::invalid_argument("The size can't be 0");
-    this->clear();
-    head = new Node(init);
-    Node* tmp = head;
-    for (; c > 1; --c, tmp = tmp->next) {
-        tmp->next = new Node(init);
-        tmp->next->prev = tmp;
+    if (c > size()) {
+        size_type len = size();
+        for (; c > len; --c) {
+            push_back(init);
+        }
     }
-    tail = tmp;
 }
 
 template <typename T>
@@ -261,21 +258,8 @@ void FrankList<T>::reverse () {
 
 template <typename T>
 void FrankList<T>::sort (bool reversed) {
-    if (reversed) {
-		head = atail;
-		tail = head;
-		tail->next = nullptr;
-
-		for (auto i = dbegin(); i != dend(); i++)
-		{
-			head->prev = i.ptr->desc;
-			if (head->prev == nullptr)
-				break;
-			head->prev->next = head;
-			head = head->prev;
-
-		}
-	}
+    if (reversed)
+		reverse();
 	else {
 		head = ahead;
 		tail = head;
@@ -341,5 +325,54 @@ void FrankList<T>::traverse (unary_predicate func, bool sorted, bool reversed) {
         }
     }
 }
+
+template <typename T>
+template <typename iter>
+iter FrankList<T>::insert (iter pos, size_type size, const_reference val) {
+    if (pos == end()) {
+        while (size) {
+            push_back(val);
+            --size;
+        }
+        return this->end();
+    }
+    else if (pos == begin()) {
+        while (size) {
+            push_front(val);
+            --size;
+        }
+
+    }
+    else {
+        while (size) {
+            Node* tmp = new Node(val);
+
+            tmp->prev = pos.ptr->prev;
+            pos.ptr->prev = tmp;
+            tmp->next = tmp->prev->next;
+            tmp->prev->next = tmp;
+            put_in_sorted_order(tmp);
+
+            --size;
+        }
+    }
+    return pos;
+}
+
+// template <typename T>
+// template <typename iter>
+// iter FrankList<T>::insert (iter pos, std::initializer_list<FrankList<T>::value_type> init) {
+    
+// }
+
+// template <typename T>
+// template <typename iter, typename input_iterator>
+// iter FrankList<T>::insert (iter pos, input_iterator f, input_iterator l) {
+//     while (f != l) {
+//         insert(pos, 2, 1);
+//         ++f;
+//     }
+//     return pos;
+// }
 
 #endif // _FLIST_BEHAVIOUR_HPP

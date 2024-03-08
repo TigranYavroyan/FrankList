@@ -2,8 +2,6 @@
 #define FRANKLIST_HPP
 
 #include "node.hpp"
-#include "_flist_iterators.hpp"
-#include "_flist_operators.hpp"
 #include "_base_iterator.hpp"
 #include "_const_iterator.hpp"
 #include "_iterator.hpp"
@@ -20,5 +18,7 @@
 #include "_flist_ctors_dtor.hpp"
 #include "_flist_behaviour.hpp"
 #include "_flist_self_organization.hpp"
+#include "_flist_iterators.hpp"
+#include "_flist_operators.hpp"
 
 #endif // FRANKLIST_HPP
